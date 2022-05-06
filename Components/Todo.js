@@ -8,7 +8,7 @@ import { TodoContext } from "../TodoContext";
 import { db } from "../firebase";
 
 const Todo = ({ id, timestamp, title, detail }) => {
-	const { showAlert } = useContext(TodoContext);
+	const { showAlert, todo, setTodo } = useContext(TodoContext);
 
 	const deleteTodo = async (id, e) => {
 		e.stopPropagation();
@@ -18,6 +18,7 @@ const Todo = ({ id, timestamp, title, detail }) => {
 	};
 	return (
 		<ListItem
+			onClick={() => setTodo({ id, title, detail, timestamp })}
 			sx={{ mt: 3, boxShadow: 3 }}
 			style={{ backgroundColor: "#FAFAFA" }}
 			secondaryAction={

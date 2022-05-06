@@ -11,6 +11,7 @@ export default function Home() {
 	const [open, setOpen] = useState(false);
 	const [alertType, setAlertType] = useState("success");
 	const [alertMessage, setAlertMessage] = useState("");
+	const [todo, setTodo] = useState({ title: "", detail: "" });
 
 	const showAlert = (type, message) => {
 		setAlertType(type);
@@ -27,7 +28,7 @@ export default function Home() {
 	};
 
 	return (
-		<TodoContext.Provider value={{ showAlert }}>
+		<TodoContext.Provider value={{ showAlert, todo, setTodo }}>
 			<Container maxWidth="sm">
 				<TodoForm />
 				<Snackbar
