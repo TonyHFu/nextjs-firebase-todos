@@ -7,16 +7,21 @@ import {
 	doc,
 } from "firebase/firestore";
 import React, { useContext, useEffect, useRef, useState } from "react";
+import { useAuth } from "../Auth";
 import { db } from "../firebase";
 import { TodoContext } from "../TodoContext";
 
 const TodoForm = () => {
 	const inputAreaRef = useRef();
+	const { currentUser } = useAuth();
 	const { showAlert, todo, setTodo } = useContext(TodoContext);
 	const onSubmit = async () => {
 		if (todo.hasOwnProperty("timestamp")) {
 			const docRef = doc(db, "todos", todo.id);
-			const todoUpdated = { ...todo, timestamp: serverTimestamp() };
+			const todoUpdated = {
+				...todo,
+				timestamp: serverTimestamp(),
+			};
 			updateDoc(docRef, todoUpdated);
 			setTodo({ title: "", detail: "" });
 			showAlert("info", `Todo with id ${docRef.id} is updated successfully`);
@@ -24,6 +29,7 @@ const TodoForm = () => {
 			const collectionRef = collection(db, "todos");
 			const docRef = await addDoc(collectionRef, {
 				...todo,
+				email: currentUser.email,
 				timestamp: serverTimestamp(),
 			});
 			setTodo({ title: "", detail: "" });
