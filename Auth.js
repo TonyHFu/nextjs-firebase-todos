@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { getAuth } from "firebase/auth";
 import Login from "./Components/Login";
 import Loading from "./Components/Loading";
@@ -31,5 +31,11 @@ export const AuthProvider = ({ children }) => {
 	if (!currentUser) {
 		return <Login />;
 	}
-	return <AuthContext.Provider value={{}}>{children}</AuthContext.Provider>;
+	return (
+		<AuthContext.Provider value={{ currentUser }}>
+			{children}
+		</AuthContext.Provider>
+	);
 };
+
+export const useAuth = () => useContext(AuthContext);

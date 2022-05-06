@@ -1,4 +1,12 @@
-import { Alert, Container, Snackbar } from "@mui/material";
+import {
+	Alert,
+	Avatar,
+	Container,
+	Snackbar,
+	Typography,
+	Box,
+	IconButton,
+} from "@mui/material";
 import Head from "next/head";
 import Image from "next/image";
 import { useState } from "react";
@@ -8,8 +16,11 @@ import TodoForm from "../Components/TodoForm";
 import TodoList from "../Components/TodoList";
 import styles from "../styles/Home.module.css";
 import { TodoContext } from "../TodoContext";
+import { useAuth } from "../Auth";
+import { auth } from "../firebase";
 
 export default function Home() {
+	const { currentUser } = useAuth();
 	const [open, setOpen] = useState(false);
 	const [alertType, setAlertType] = useState("success");
 	const [alertMessage, setAlertMessage] = useState("");
@@ -31,6 +42,12 @@ export default function Home() {
 	return (
 		<TodoContext.Provider value={{ showAlert, todo, setTodo }}>
 			<Container maxWidth="sm">
+				<Box sx={{ display: "flex", justifyContent: "space-between", mt: 3 }}>
+					<IconButton onClick={() => auth.signOut()}>
+						<Avatar src={currentUser.photoURL} />
+					</IconButton>
+					<Typography variant="h5">{currentUser.displayName}</Typography>
+				</Box>
 				<TodoForm />
 				<Snackbar
 					open={open}
