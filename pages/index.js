@@ -2,6 +2,7 @@ import { Alert, Container, Snackbar } from "@mui/material";
 import Head from "next/head";
 import Image from "next/image";
 import { useState } from "react";
+import Loading from "../Components/Loading";
 import TodoForm from "../Components/TodoForm";
 import TodoList from "../Components/TodoList";
 import styles from "../styles/Home.module.css";
@@ -27,6 +28,7 @@ export default function Home() {
 		setOpen(false);
 	};
 
+	return <Loading type="spin" color="green" />;
 	return (
 		<TodoContext.Provider value={{ showAlert, todo, setTodo }}>
 			<Container maxWidth="sm">
