@@ -1,4 +1,4 @@
-import { collection, onSnapshot, query, orderBy } from "@firebase/firestore";
+import { collection, onSnapshot, orderBy, query } from "@firebase/firestore";
 import React, { useEffect } from "react";
 
 const TodoList = () => {
