@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { getAuth } from "firebase/auth";
 import Login from "./Components/Login";
 import Loading from "./Components/Loading";
+import nookies from "nookies";
 
 const AuthContext = createContext({});
 
@@ -15,13 +16,16 @@ export const AuthProvider = ({ children }) => {
 				console.log("no user");
 				setCurrentUser(null);
 				setLoading(false);
+				nookies.set(undefined, " ", token, {});
 				return;
 			}
 			const token = await user.getIdToken();
 			setCurrentUser(user);
 			setLoading(false);
-			console.log("token", token);
-			console.log("user", user);
+			nookies.set(undefined, "token", token, {});
+
+			// console.log("token", token);
+			// console.log("user", user);
 		});
 	}, []);
 
